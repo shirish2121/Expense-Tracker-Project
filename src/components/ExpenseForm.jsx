@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ExpenseForm({ setExpenses }) {
   // const handleSubmit = (e) => {
@@ -30,29 +30,16 @@ export default function ExpenseForm({ setExpenses }) {
     amount: '',
   });
 
-  const titleRef = useRef();
-  const categoryRef = useRef();
-  const amountRef = useRef();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // const expense = { title, category, amount, id: crypto.randomUUID() };
-    // console.log(expense);
-    setExpenses((prev) => [
-      ...prev,
-      {
-        title: titleRef.current.value,
-        category: categoryRef.current.value,
-        amount: amountRef.current.value,
-        id: crypto.randomUUID(),
-      },
-    ]);
-    // setExpense({ title: '', category: '', amount: '' });
+    console.log(expense);
+    setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
+    setExpense({ title: '', category: '', amount: '' });
     // e.target.reset();
     // setTitle('');
     // setCategory('');
     // setAmount('');
-    // ====================================================================
   };
   return (
     <form className='expense-form' onSubmit={handleSubmit}>
@@ -61,11 +48,10 @@ export default function ExpenseForm({ setExpenses }) {
         <input
           id='title'
           name='title'
-          // value={expense.title}
-          // onChange={(e) =>
-          //   setExpense((pre) => ({ ...pre, title: e.target.value }))
-          // }
-          ref={titleRef}
+          value={expense.title}
+          onChange={(e) =>
+            setExpense((pre) => ({ ...pre, title: e.target.value }))
+          }
         />
       </div>
       <div className='input-container'>
@@ -73,11 +59,10 @@ export default function ExpenseForm({ setExpenses }) {
         <select
           id='category'
           name='category'
-          // value={expense.category}
-          // onChange={(e) =>
-          //   setExpense((pre) => ({ ...pre, category: e.target.value }))
-          // }
-          ref={categoryRef}
+          value={expense.category}
+          onChange={(e) =>
+            setExpense((pre) => ({ ...pre, category: e.target.value }))
+          }
         >
           <option value='' hidden>
             Select Category
@@ -94,11 +79,10 @@ export default function ExpenseForm({ setExpenses }) {
         <input
           id='amount'
           name='amount'
-          // value={expense.amount}
-          // onChange={(e) =>
-          //   setExpense((pre) => ({ ...pre, amount: e.target.value }))
-          // }
-          ref={amountRef}
+          value={expense.amount}
+          onChange={(e) =>
+            setExpense((pre) => ({ ...pre, amount: e.target.value }))
+          }
         />
       </div>
       <button className='add-btn'>Add</button>
