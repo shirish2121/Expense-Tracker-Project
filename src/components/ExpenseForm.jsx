@@ -1,45 +1,42 @@
 import React, { useState } from 'react';
 
 export default function ExpenseForm({ setExpenses }) {
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  //   console.log(getFormData(e.target));
-  //   const expense = { ...getFormData(e.target), id: crypto.randomUUID() };
-  //   setExpenses((prevState) => [...prevState, expense]);
-  //   e.target.reset();
-  // };
-
-  // const getFormData = (form) => {
-  //   const formData = new FormData(form);
-  //   console.log(formData);
-  //   console.log(formData.entries());
-  //   const data = {};
-  //   for (const [key, value] of formData.entries()) {
-  //     data[key] = value;
-  //   }
-  //   return data;
-  // };
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [expense, setExpense] = useState({
-    id: crypto.randomUUID(),
     title: '',
     category: '',
     amount: '',
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validate = (formData) => {
+    const errorObject = {};
+    if (!formData.title) errorObject.title = 'Title is required';
+
+    if (!formData.category) errorObject.category = 'Please Select a category';
+
+    if (!formData.amount) errorObject.amount = 'amount is amount';
+
+    setErrors(errorObject);
+    return errorObject;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const expense = { title, category, amount, id: crypto.randomUUID() };
-    console.log(expense);
+    const validateResult = validate(expense);
+    console.log(validateResult);
+    if (Object.keys(validateResult).length) return;
     setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
     setExpense({ title: '', category: '', amount: '' });
-    // e.target.reset();
-    // setTitle('');
-    // setCategory('');
-    // setAmount('');
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setExpense((prev) => ({ ...prev, [name]: value, id: crypto.randomUUID() }));
+    setErrors({});
   };
   return (
     <form className='expense-form' onSubmit={handleSubmit}>
@@ -49,10 +46,9 @@ export default function ExpenseForm({ setExpenses }) {
           id='title'
           name='title'
           value={expense.title}
-          onChange={(e) =>
-            setExpense((pre) => ({ ...pre, title: e.target.value }))
-          }
+          onChange={handleChange}
         />
+        <p className='errors'>{errors.title}</p>
       </div>
       <div className='input-container'>
         <label htmlFor='category'>Category</label>
@@ -60,9 +56,7 @@ export default function ExpenseForm({ setExpenses }) {
           id='category'
           name='category'
           value={expense.category}
-          onChange={(e) =>
-            setExpense((pre) => ({ ...pre, category: e.target.value }))
-          }
+          onChange={handleChange}
         >
           <option value='' hidden>
             Select Category
@@ -73,6 +67,7 @@ export default function ExpenseForm({ setExpenses }) {
           <option value='Education'>Education</option>
           <option value='Medicine'>Medicine</option>
         </select>
+        <p className='errors'>{errors.category}</p>
       </div>
       <div className='input-container'>
         <label htmlFor='amount'>Amount</label>
@@ -80,10 +75,9 @@ export default function ExpenseForm({ setExpenses }) {
           id='amount'
           name='amount'
           value={expense.amount}
-          onChange={(e) =>
-            setExpense((pre) => ({ ...pre, amount: e.target.value }))
-          }
+          onChange={handleChange}
         />
+        <p className='errors'>{errors.amount}</p>
       </div>
       <button className='add-btn'>Add</button>
     </form>
