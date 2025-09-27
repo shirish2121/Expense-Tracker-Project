@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Input from './Input';
+import Select from './Select';
 
 export default function ExpenseForm({ setExpenses }) {
   const [title, setTitle] = useState('');
@@ -8,20 +10,59 @@ export default function ExpenseForm({ setExpenses }) {
     title: '',
     category: '',
     amount: '',
+    email: '',
   });
 
   const [errors, setErrors] = useState({});
 
+  const validationConfig = {
+    title: [
+      { required: true, message: 'Please enter the title' },
+      { minLength: 5, message: 'Title should be atleast 5 characters long' },
+    ],
+    category: [{ required: true, message: 'Please enter a category' }],
+    amount: [{ required: true, message: 'Please enter an amount' }],
+    email: [
+      { required: true, message: 'Please enter an email' },
+      {
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email',
+      },
+    ],
+  };
+
   const validate = (formData) => {
-    const errorObject = {};
-    if (!formData.title) errorObject.title = 'Title is required';
+    const errorsData = {};
+    // if (!formData.title) errorObject.title = 'Title is required';
 
-    if (!formData.category) errorObject.category = 'Please Select a category';
+    // if (!formData.category) errorObject.category = 'Please Select a category';
 
-    if (!formData.amount) errorObject.amount = 'amount is amount';
+    // if (!formData.amount) errorObject.amount = 'amount is amount';
 
-    setErrors(errorObject);
-    return errorObject;
+    // setErrors(errorObject);
+    // return errorObject;
+    console.log(Object.entries(formData));
+    console.log(Object.entries(formData));
+
+    Object.entries(formData).forEach(([key, value]) => {
+      validationConfig[key].some((rule) => {
+        if (rule.required && !value) {
+          errorsData[key] = rule.message;
+          return true;
+        }
+        if (rule.minLength && value.length < rule.minLength) {
+          errorsData[key] = rule.message;
+          return true;
+        }
+        if (rule.pattern && !rule.pattern.test(value)) {
+          errorsData[key] = rule.message;
+          return true;
+        }
+      });
+    });
+
+    setErrors(errorsData);
+    return errorsData;
   };
 
   const handleSubmit = (e) => {
@@ -35,12 +76,12 @@ export default function ExpenseForm({ setExpenses }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setExpense((prev) => ({ ...prev, [name]: value, id: crypto.randomUUID() }));
+    setExpense((prev) => ({ ...prev, [name]: value }));
     setErrors({});
   };
   return (
     <form className='expense-form' onSubmit={handleSubmit}>
-      <div className='input-container'>
+      {/* <div className='input-container'>
         <label htmlFor='title'>Title</label>
         <input
           id='title'
@@ -49,8 +90,16 @@ export default function ExpenseForm({ setExpenses }) {
           onChange={handleChange}
         />
         <p className='errors'>{errors.title}</p>
-      </div>
-      <div className='input-container'>
+      </div> */}
+      <Input
+        label='Title'
+        id='title'
+        name='title'
+        value={expense.title}
+        onChange={handleChange}
+        errors={errors.title}
+      />
+      {/* <div className='input-container'>
         <label htmlFor='category'>Category</label>
         <select
           id='category'
@@ -62,14 +111,24 @@ export default function ExpenseForm({ setExpenses }) {
             Select Category
           </option>
           <option value='Grocery'>Grocery</option>
-          <option value='Clothes'>Clothes</option>
+          <opt ion value='Clothes'>Clothes</option>
           <option value='Bills'>Bills</option>
           <option value='Education'>Education</option>
           <option value='Medicine'>Medicine</option>
         </select>
         <p className='errors'>{errors.category}</p>
-      </div>
-      <div className='input-container'>
+      </div> */}
+      <Select
+        label='Category'
+        id='category'
+        name='category'
+        value={expense.category}
+        onChange={handleChange}
+        defaultOption='Select Category'
+        options={['Grocery', 'Clothes', 'Bills', 'Education', 'Medicine']}
+        errors={errors.category}
+      />
+      {/* <div className='input-container'>
         <label htmlFor='amount'>Amount</label>
         <input
           id='amount'
@@ -78,7 +137,23 @@ export default function ExpenseForm({ setExpenses }) {
           onChange={handleChange}
         />
         <p className='errors'>{errors.amount}</p>
-      </div>
+      </div> */}
+      <Input
+        label='Amount'
+        id='amount'
+        name='amount'
+        value={expense.amount}
+        onChange={handleChange}
+        errors={errors.amount}
+      />
+      <Input
+        label='Email'
+        id='email'
+        name='email'
+        value={expense.email}
+        onChange={handleChange}
+        errors={errors.email}
+      />
       <button className='add-btn'>Add</button>
     </form>
   );
