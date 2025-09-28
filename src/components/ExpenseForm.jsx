@@ -33,14 +33,7 @@ export default function ExpenseForm({ setExpenses }) {
 
   const validate = (formData) => {
     const errorsData = {};
-    // if (!formData.title) errorObject.title = 'Title is required';
 
-    // if (!formData.category) errorObject.category = 'Please Select a category';
-
-    // if (!formData.amount) errorObject.amount = 'amount is amount';
-
-    // setErrors(errorObject);
-    // return errorObject;
     console.log(Object.entries(formData));
     console.log(Object.entries(formData));
 
@@ -81,16 +74,6 @@ export default function ExpenseForm({ setExpenses }) {
   };
   return (
     <form className='expense-form' onSubmit={handleSubmit}>
-      {/* <div className='input-container'>
-        <label htmlFor='title'>Title</label>
-        <input
-          id='title'
-          name='title'
-          value={expense.title}
-          onChange={handleChange}
-        />
-        <p className='errors'>{errors.title}</p>
-      </div> */}
       <Input
         label='Title'
         id='title'
@@ -99,25 +82,7 @@ export default function ExpenseForm({ setExpenses }) {
         onChange={handleChange}
         errors={errors.title}
       />
-      {/* <div className='input-container'>
-        <label htmlFor='category'>Category</label>
-        <select
-          id='category'
-          name='category'
-          value={expense.category}
-          onChange={handleChange}
-        >
-          <option value='' hidden>
-            Select Category
-          </option>
-          <option value='Grocery'>Grocery</option>
-          <opt ion value='Clothes'>Clothes</option>
-          <option value='Bills'>Bills</option>
-          <option value='Education'>Education</option>
-          <option value='Medicine'>Medicine</option>
-        </select>
-        <p className='errors'>{errors.category}</p>
-      </div> */}
+
       <Select
         label='Category'
         id='category'
@@ -128,16 +93,7 @@ export default function ExpenseForm({ setExpenses }) {
         options={['Grocery', 'Clothes', 'Bills', 'Education', 'Medicine']}
         errors={errors.category}
       />
-      {/* <div className='input-container'>
-        <label htmlFor='amount'>Amount</label>
-        <input
-          id='amount'
-          name='amount'
-          value={expense.amount}
-          onChange={handleChange}
-        />
-        <p className='errors'>{errors.amount}</p>
-      </div> */}
+
       <Input
         label='Amount'
         id='amount'
