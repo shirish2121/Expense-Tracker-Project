@@ -4,6 +4,12 @@ import { useFilter } from '../hooks/useFilter';
 export default function ExpenseTable({ expenses }) {
   const [category, setCategory] = useState('');
   const [filteredData, setQuery] = useFilter(expenses, (data) => data.category);
+
+  const total = filteredData.reduce((acc, curr) => {
+    acc += curr.amount;
+    return acc;
+  }, 0);
+
   // const filteredData = expenses.filter((expense) =>
   //   expense.category.toLowerCase().includes(category)
   // );
@@ -58,7 +64,7 @@ export default function ExpenseTable({ expenses }) {
         <tr>
           <th>Total</th>
           <th></th>
-          <th>₹8100</th>
+          <th>₹{total}</th>
         </tr>
       </tbody>
     </table>
