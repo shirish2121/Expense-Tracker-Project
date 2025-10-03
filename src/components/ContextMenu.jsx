@@ -1,11 +1,31 @@
 import React from 'react';
 
-export default function ContextMenu({ menuPosition }) {
+export default function ContextMenu({
+  menuPosition,
+  setMenuPosition,
+  setExpenses,
+  rowId,
+}) {
   if (!menuPosition.left) return;
   return (
     <div className='context-menu' style={menuPosition}>
-      <div>Edit</div>
-      <div>Delete</div>
+      <div
+        onClick={() => {
+          console.log('Editing');
+          setMenuPosition({});
+        }}
+      >
+        Edit
+      </div>
+      <div
+        onClick={() => {
+          console.log('Deleting');
+          setExpenses((prev) => prev.filter((expense) => expense.id !== rowId));
+          setMenuPosition({});
+        }}
+      >
+        Delete
+      </div>
     </div>
   );
 }
