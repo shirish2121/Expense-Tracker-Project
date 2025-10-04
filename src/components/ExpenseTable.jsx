@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import { useFilter } from '../hooks/useFilter';
 import ContextMenu from './ContextMenu';
 
-export default function ExpenseTable({ expenses, setExpenses }) {
+export default function ExpenseTable({
+  expenses,
+  setExpenses,
+  setExpense,
+  setIsEditing,
+  rowId,
+  setRowId,
+}) {
   const [category, setCategory] = useState('');
   const [filteredData, setQuery] = useFilter(expenses, (data) => data.category);
   const [menuPosition, setMenuPosition] = useState({});
-  const [rowId, setRowId] = useState('');
+  // const [rowId, setRowId] = useState('');
 
   const total = filteredData.reduce((acc, curr) => {
     acc += curr.amount;
@@ -22,7 +29,10 @@ export default function ExpenseTable({ expenses, setExpenses }) {
         menuPosition={menuPosition}
         setMenuPosition={setMenuPosition}
         setExpenses={setExpenses}
+        expenses={expenses}
         rowId={rowId}
+        setExpense={setExpense}
+        setIsEditing={setIsEditing}
       />
       <table className='expense-table' onClick={() => setMenuPosition({})}>
         <thead>

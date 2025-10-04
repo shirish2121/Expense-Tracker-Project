@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import Input from './Input';
 import Select from './Select';
 
-export default function ExpenseForm({ setExpenses }) {
+export default function ExpenseForm({
+  setExpenses,
+  expense,
+  setExpense,
+  isEditing,
+  rowId,
+  setIsEditing,
+}) {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
-  const [expense, setExpense] = useState({
-    title: '',
-    category: '',
-    amount: '',
-  });
+  // const [expense, setExpense] = useState({
+  //   title: '',
+  //   category: '',
+  //   amount: '',
+  // });
 
   const [errors, setErrors] = useState({});
 
@@ -26,8 +33,8 @@ export default function ExpenseForm({ setExpenses }) {
   const validate = (formData) => {
     const errorsData = {};
 
-    console.log(Object.entries(formData));
-    console.log(Object.entries(formData));
+    // console.log(Object.entries(formData));
+    // console.log(Object.entries(formData));
 
     Object.entries(formData).forEach(([key, value]) => {
       validationConfig[key].some((rule) => {
@@ -49,9 +56,30 @@ export default function ExpenseForm({ setExpenses }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const validateResult = validate(expense);
-    console.log(validateResult);
+    // console.log(validateResult);
     if (Object.keys(validateResult).length) return;
-    setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
+    // setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
+    console.log(isEditing);
+    !isEditing
+      ? setExpenses((prev) => [
+          ...prev,
+          { ...expense, id: crypto.randomUUID() },
+        ])
+      : setExpenses((prev) => {
+          setIsEditing(0);
+          // prev.forEach((obj) => obj.id === rowId ? {obj.title = expense.title; obj.category = expense.setCategory, obj.amount= expense.amount} : {return});
+          return prev.map((obj) => {
+            if (obj.id === rowId) {
+              obj.title = expense.title;
+              obj.category = expense.category;
+              obj.amount = expense.amount;
+              return obj;
+            } else {
+              return obj;
+            }
+            console.log(prev);
+          });
+        });
     setExpense({ title: '', category: '', amount: '' });
   };
 
