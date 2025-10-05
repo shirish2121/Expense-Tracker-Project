@@ -109,7 +109,7 @@ export default function ExpenseForm({
         label='Amount'
         id='amount'
         name='amount'
-        value={expense.amount}
+        value={expense.amount.replace(/[^\d.]+/g, '')}
         onChange={handleChange}
         errors={errors.amount}
       />
