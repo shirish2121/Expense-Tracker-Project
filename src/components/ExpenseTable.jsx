@@ -16,7 +16,7 @@ export default function ExpenseTable({
   // const [rowId, setRowId] = useState('');
 
   const total = filteredData.reduce((acc, curr) => {
-    acc += curr.amount;
+    acc += +curr.amount;
     return acc;
   }, 0);
 
