@@ -66,7 +66,7 @@ export default function ExpenseForm({
           { ...expense, id: crypto.randomUUID() },
         ])
       : setExpenses((prev) => {
-          // prev.forEach((obj) => obj.id === rowId ? {obj.title = expense.title; obj.category = expense.setCategory, obj.amount= expense.amount} : {return});
+          setIsEditing(0);
           return prev.map((prevExpense) => {
             if (prevExpense.id === rowId) {
               return { ...expense, id: rowId };
@@ -74,7 +74,6 @@ export default function ExpenseForm({
               return prevExpense;
             }
           });
-          setIsEditing(0);
         });
     setExpense({ title: '', category: '', amount: '' });
   };
@@ -115,7 +114,7 @@ export default function ExpenseForm({
         errors={errors.amount}
       />
 
-      <button className='add-btn'>Add</button>
+      <button className='add-btn'>{isEditing ? 'Save' : 'Add'}</button>
     </form>
   );
 }
