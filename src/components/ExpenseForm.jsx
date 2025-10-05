@@ -66,19 +66,15 @@ export default function ExpenseForm({
           { ...expense, id: crypto.randomUUID() },
         ])
       : setExpenses((prev) => {
-          setIsEditing(0);
           // prev.forEach((obj) => obj.id === rowId ? {obj.title = expense.title; obj.category = expense.setCategory, obj.amount= expense.amount} : {return});
-          return prev.map((obj) => {
-            if (obj.id === rowId) {
-              obj.title = expense.title;
-              obj.category = expense.category;
-              obj.amount = expense.amount;
-              return obj;
+          return prev.map((prevExpense) => {
+            if (prevExpense.id === rowId) {
+              return { ...expense, id: rowId };
             } else {
-              return obj;
+              return prevExpense;
             }
-            console.log(prev);
           });
+          setIsEditing(0);
         });
     setExpense({ title: '', category: '', amount: '' });
   };
