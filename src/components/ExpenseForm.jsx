@@ -59,7 +59,7 @@ export default function ExpenseForm({
     // console.log(validateResult);
     if (Object.keys(validateResult).length) return;
     // setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
-    console.log(isEditing);
+    // console.log(isEditing);
     !isEditing
       ? setExpenses((prev) => [
           ...prev,
