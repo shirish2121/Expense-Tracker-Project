@@ -52,11 +52,12 @@ export default function ExpenseTable({
               <div>
                 <span>Amount</span>
                 <svg
-                  onClick={() =>
-                    setExpenses((prev) =>
-                      prev.sort((a, b) => a.amount - b.amount)
-                    )
-                  }
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setExpenses((prev) => [
+                      ...prev.sort((a, b) => a.amount - b.amount),
+                    ]);
+                  }}
                   xmlns='http://www.w3.org/2000/svg'
                   width='10'
                   viewBox='0 0 384 512'
