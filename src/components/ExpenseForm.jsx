@@ -24,7 +24,7 @@ export default function ExpenseForm({
   const validationConfig = {
     title: [
       { required: true, message: 'Please enter the title' },
-      { minLength: 5, message: 'Title should be atleast 5 characters long' },
+      { minLength: 3, message: 'Title should be atleast 5 characters long' },
     ],
     category: [{ required: true, message: 'Please enter a category' }],
     amount: [{ required: true, message: 'Please enter an amount' }],
