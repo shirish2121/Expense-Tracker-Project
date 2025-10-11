@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from './Input';
 import Select from './Select';
-
 export default function ExpenseForm({
+  expenses,
   setExpenses,
   expense,
   setExpense,
@@ -13,6 +13,7 @@ export default function ExpenseForm({
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
+
   // const [expense, setExpense] = useState({
   //   title: '',
   //   category: '',
@@ -20,6 +21,12 @@ export default function ExpenseForm({
   // });
 
   const [errors, setErrors] = useState({});
+
+  // useEffect(() => {
+  //   if (JSON.parse(localStorage.getItem('records'))) {
+  //     setExpenses(JSON.parse(localStorage.getItem('records')));
+  //   }
+  // }, []);
 
   const validationConfig = {
     title: [
@@ -61,10 +68,9 @@ export default function ExpenseForm({
     // setExpenses((prev) => [...prev, { ...expense, id: crypto.randomUUID() }]);
     // console.log(isEditing);
     !isEditing
-      ? setExpenses((prev) => [
-          ...prev,
-          { ...expense, id: crypto.randomUUID() },
-        ])
+      ? setExpenses((prev) => {
+          return [...prev, { ...expense, id: crypto.randomUUID() }];
+        })
       : setExpenses((prev) => {
           setIsEditing(0);
           return prev.map((prevExpense) => {

@@ -4,6 +4,7 @@ import ExpenseForm from './components/ExpenseForm';
 import ExpenseTable from './components/ExpenseTable';
 import expenseData from './expenseData';
 import React from 'react';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
   const [expenses, setExpenses] = useState(expenseData);
@@ -15,11 +16,22 @@ function App() {
   const [isEditing, setIsEditing] = useState(0);
   const [rowId, setRowId] = useState('');
 
+  const [localStorageData, setLocalStorageData] = useLocalStorage(
+    'records',
+    [1, 2, 3, 4]
+  );
+
+  console.log('localStorageData', localStorageData);
+
   return (
     <main>
-      <h1>Track Your Expense</h1>
+      <h1 onClick={() => setLocalStorageData([5, 6, 7, 8])}>
+        Track Your Expense
+        {localStorageData}
+      </h1>
       <div className='expense-tracker'>
         <ExpenseForm
+          expenses={expenses}
           setExpenses={setExpenses}
           expense={expense}
           setExpense={setExpense}
