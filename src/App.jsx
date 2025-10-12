@@ -25,7 +25,11 @@ function App() {
 
   return (
     <main>
-      <h1 onClick={() => setLocalStorageData([5, 6, 7, 8])}>
+      <h1
+        onClick={() => {
+          setLocalStorageData((prevState) => [5, 6, 7, 8]);
+        }}
+      >
         Track Your Expense
         {localStorageData}
       </h1>
