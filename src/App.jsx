@@ -7,7 +7,7 @@ import React from 'react';
 import { useLocalStorage } from './hooks/useLocalStorage';
 
 function App() {
-  const [expenses, setExpenses] = useState(expenseData);
+  const [expenses, setExpenses] = useLocalStorage('expenses', expenseData);
   const [expense, setExpense] = useState({
     title: '',
     category: '',
@@ -25,14 +25,7 @@ function App() {
 
   return (
     <main>
-      <h1
-        onClick={() => {
-          setLocalStorageData((prevState) => [5, 6, 7, 8]);
-        }}
-      >
-        Track Your Expense
-        {localStorageData}
-      </h1>
+      <h1>Track Your Expense</h1>
       <div className='expense-tracker'>
         <ExpenseForm
           expenses={expenses}
