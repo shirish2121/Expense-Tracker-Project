@@ -13,15 +13,15 @@ function App() {
     category: '',
     amount: '',
   });
-  const [isEditing, setIsEditing] = useState(0);
-  const [rowId, setRowId] = useState('');
+  const [isEditing, setIsEditing] = useLocalStorage('isEditing', 0);
+  const [rowId, setRowId] = useLocalStorage('rowId', '');
 
-  const [localStorageData, setLocalStorageData] = useLocalStorage(
-    'records',
-    [1, 2, 3, 4]
-  );
+  // const [localStorageData, setLocalStorageData] = useLocalStorage(
+  //   'records',
+  //   [1, 2, 3, 4]
+  // );
 
-  console.log('localStorageData', localStorageData);
+  // console.log('localStorageData', localStorageData);
 
   return (
     <main>

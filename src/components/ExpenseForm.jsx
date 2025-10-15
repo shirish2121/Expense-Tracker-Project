@@ -89,6 +89,7 @@ export default function ExpenseForm({
     setExpense((prev) => ({ ...prev, [name]: value }));
     setErrors({});
   };
+  debugger;
   return (
     <form className='expense-form' onSubmit={handleSubmit}>
       <Input
@@ -115,7 +116,7 @@ export default function ExpenseForm({
         label='Amount'
         id='amount'
         name='amount'
-        value={expense.amount.replace(/[^\d.]+/g, '')}
+        value={String(expense?.amount ?? '').replace(/[^\d.]+/g, '')}
         onChange={handleChange}
         errors={errors.amount}
       />
